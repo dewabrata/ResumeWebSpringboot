@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,17 +36,18 @@ public class MainController {
 	
 	
 	@GetMapping("/")
-	public String helloWorld(Model model) {
+	public String helloWorld(Model model, @PageableDefault(size=2) Pageable pageable) {
 		
 		Profile profile =profileRepo.findById(1).get();
 		model.addAttribute("asiap",profile);
 		List<Skill> skill = skillRepository.findAll();
 		model.addAttribute("skill", skill);
 		
-		Pageable paging = PageRequest.of(2, 2);
 		
-		Page<Resume> lstResume = rp.findAll(paging);
-		model.addAttribute("resume", lstResume.getContent());
+		
+		Page<Resume> pageResume = rp.findAll(pageable);
+		
+		model.addAttribute("resume", pageResume);
 		
 	
 		return "index";
