@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -41,9 +42,10 @@ public class MainController {
 		List<Skill> skill = skillRepository.findAll();
 		model.addAttribute("skill", skill);
 		
+		Pageable paging = PageRequest.of(2, 2);
 		
-		List<Resume> lstResume = rp.findAllByTipeResume("jobs");
-		model.addAttribute("resume", lstResume);
+		Page<Resume> lstResume = rp.findAll(paging);
+		model.addAttribute("resume", lstResume.getContent());
 		
 	
 		return "index";

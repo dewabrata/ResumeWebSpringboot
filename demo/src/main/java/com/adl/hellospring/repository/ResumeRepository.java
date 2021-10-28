@@ -16,7 +16,7 @@ public interface ResumeRepository extends JpaRepository<Resume, Integer>{
 	List<Resume> findAllResumes();
 	
 	@Query("select r from Resume r where r.tipe = ?1")
-	List<Resume> findAllByTipeResume(String tipe);
+	List<Resume> findAllByTipeResume(String tipe ,Pageable paging);
 	
 	@Query("select r from Resume r where r.tipe = ?1 and r.judul =?2")
 	List<Resume> findAllByTipeResumeAndJudul(String tipe, String judul);
