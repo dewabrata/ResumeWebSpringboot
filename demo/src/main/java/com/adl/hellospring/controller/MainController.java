@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,7 +37,7 @@ public class MainController {
 	
 	
 	@GetMapping("/")
-	public String helloWorld(Model model, @PageableDefault(size=2) Pageable pageable) {
+	public String helloWorld(@PageableDefault(size=2) Pageable pageable,Model model) {
 		
 		Profile profile =profileRepo.findById(1).get();
 		model.addAttribute("asiap",profile);
@@ -47,7 +48,10 @@ public class MainController {
 		
 		Page<Resume> pageResume = rp.findAll(pageable);
 		
+	   
+		
 		model.addAttribute("resume", pageResume);
+		
 		
 	
 		return "index";

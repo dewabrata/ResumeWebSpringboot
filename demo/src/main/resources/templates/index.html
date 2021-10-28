@@ -360,15 +360,21 @@ Paging section
  -->
 				<div class="pagination">
 				<span th:if="${resume.hasPrevious()}" >
-					<a href="#">&laquo;</a> 
+					<a th:href="@{/(page=${i},size=${resume.size})}">&laquo;</a> 
 				</span>
 				<th:block th:each="i: ${#numbers.sequence(0, resume.getTotalPages() -1)}">
 				
-					<a href="#"><span th:text = ${i}/></a> 
+				<span th:if ="${resume.getNumber() == i}" >
+					<a class="active" th:href="@{/(page=${i},size=${resume.size})}"><span th:text = ${i}+1/></a> 
+				</span>
+				<span th:unless ="${resume.getNumber() == i}" >
+					<a th:href="@{/(page=${i},size=${resume.size})}"><span th:text = ${i}+1/></a> 
+				</span>
+				
 				</th:block>
 				
 					<span th:if="${resume.hasNext()}" >
-					<a href="#">&raquo;</a>
+					<a th:href="@{/(page=${i}+1,size=${resume.size})}">&raquo;</a>
 					</span>
 				</div>
 		
